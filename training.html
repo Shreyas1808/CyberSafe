@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSafe - Security Training</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-secondary: #10b981;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+            --color-ai: #8b5cf6;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: #f9fafb;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        /* Header */
+        #header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-dark);
+        }
+        .logo span { color: var(--color-primary); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a {
+            color: var(--color-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--color-primary); }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, var(--color-light) 0%, #e0e7ff 100%);
+            padding: 10rem 0 5rem 0;
+            margin-top: 70px;
+        }
+
+        /* Card/Panel styling to match index */
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Footer */
+        #footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .footer-links li { margin: 0 1rem; }
+        .footer-links a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+
+        /* Training-specific styles (harmonized with index look) */
+        .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 1.5rem; margin-top: 2rem; }
+        .module-card { background: #fff; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); padding: 1.5rem; }
+        .module-card h3 { margin-bottom: .5rem; }
+        .module-meta { color: #64748b; font-size: .9rem; margin-bottom: .75rem; }
+        .badge { display: inline-block; background: #e5edff; color: #1d4ed8; padding: 2px 10px; border-radius: 999px; font-size: .8rem; font-weight: 600; }
+        .module-actions { margin-top: .75rem; display: flex; align-items: center; justify-content: space-between; }
+        .complete-btn { background: var(--color-secondary); }
+        .completed-flag { color: #059669; font-weight: 700; font-size: .9rem; }
+
+        .progress-wrap { margin-top: 1.5rem; }
+        .progress-bar { width: 100%; background: #e5e7eb; border-radius: 999px; overflow: hidden; height: 12px; }
+        .progress-fill { height: 100%; width: 0%; background: var(--color-primary); transition: width .3s ease; }
+        .progress-label { margin-top: .5rem; font-weight: 600; color: #374151; }
+
+        .quiz { margin-top: 3rem; background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        .quiz h3 { margin-bottom: 1rem; }
+        .quiz-grid { display: grid; grid-template-columns: 1fr; gap: 1rem; }
+        @media (min-width: 768px) { .quiz-grid { grid-template-columns: 1fr 1fr; } }
+        .quiz-card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 1rem; }
+        .quiz-card-header { display: flex; align-items: center; gap: .6rem; margin-bottom: .6rem; }
+        .quiz-number { width: 28px; height: 28px; border-radius: 999px; background: var(--color-primary); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; font-size: .9rem; }
+        .quiz-options label { display: block; padding: .5rem .6rem; border: 1px solid #e5e7eb; border-radius: 8px; margin-bottom: .5rem; cursor: pointer; transition: background .2s, border-color .2s; }
+        .quiz-options label:hover { background: #f9fafb; border-color: #cbd5e1; }
+        .quiz-actions { display: flex; align-items: center; gap: 1rem; margin-top: 1rem; flex-wrap: wrap; }
+
+        .certificate { margin-top: 2rem; background: #fff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+        .certificate button[disabled] { opacity: .5; cursor: not-allowed; }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav id="navbar">
+                <a href="index.html" class="logo">Cyber<span>Safe</span></a>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#threats-preview">Learn</a></li>
+                    <li><a href="training.html">Training</a></li>
+                    <li><a href="ai detector.html" class="ai-link">AI Detector</a></li>
+                    <li><a href="login.html" class="btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section (matching index style) -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="text-center">Security Training</h1>
+                <p class="text-center">Short, actionable modules to build strong cyber hygiene and resilience.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Training Content -->
+    <section class="section-padding">
+        <div class="container">
+            <h2>Modules</h2>
+            <div class="progress-wrap">
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+                <div class="progress-label" id="progress-label">Modules completed: 0 / 0 (0%)</div>
+            </div>
+
+            <div class="modules-grid">
+                <div class="module-card" data-module-id="passwords">
+                    <h3><i class="fas fa-lock"></i> Passwords & Authentication</h3>
+                    <div class="module-meta">10 min • Beginner • <span class="badge">Core</span></div>
+                    <p>Create strong passphrases, enable 2FA, and avoid reuse across accounts.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="phishing">
+                    <h3><i class="fas fa-envelope-open-text"></i> Phishing Recognition</h3>
+                    <div class="module-meta">12 min • Beginner</div>
+                    <p>Spot red flags in emails, links, and attachments before you click.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="wifi">
+                    <h3><i class="fas fa-wifi"></i> Safe Browsing & Wi‑Fi</h3>
+                    <div class="module-meta">8 min • Beginner</div>
+                    <p>Use HTTPS, avoid rogue hotspots, and sandbox unknown downloads.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="privacy">
+                    <h3><i class="fas fa-user-shield"></i> Privacy & Social Media</h3>
+                    <div class="module-meta">9 min • Beginner</div>
+                    <p>Lock down profiles, reduce oversharing, and manage app permissions.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="device">
+                    <h3><i class="fas fa-mobile-alt"></i> Device Hardening</h3>
+                    <div class="module-meta">10 min • Intermediate</div>
+                    <p>Keep OS and apps updated, enable disk encryption, and configure screen locks.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="backups">
+                    <h3><i class="fas fa-database"></i> Backups & Recovery</h3>
+                    <div class="module-meta">7 min • Beginner</div>
+                    <p>Set up automatic backups and test restores to recover quickly from incidents.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="ransomware">
+                    <h3><i class="fas fa-skull-crossbones"></i> Ransomware Readiness</h3>
+                    <div class="module-meta">8 min • Intermediate</div>
+                    <p>Prevent, detect, and respond to ransomware with least privilege and offline backups.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+
+                <div class="module-card" data-module-id="incident">
+                    <h3><i class="fas fa-ambulance"></i> Incident Response Basics</h3>
+                    <div class="module-meta">9 min • Intermediate</div>
+                    <p>Isolate affected accounts/devices, rotate credentials, and report the incident.</p>
+                    <div class="module-actions">
+                        <span class="completed-flag" style="display:none;">Completed</span>
+                        <button class="btn complete-toggle complete-btn">Mark Complete</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz">
+                <h3>Quick Quiz</h3>
+                <div class="quiz-grid">
+                    <div class="quiz-card">
+                        <div class="quiz-card-header">
+                            <div class="quiz-number">1</div>
+                            <p>Best way to store passwords?</p>
+                        </div>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q1" value="a"> Save in notes app</label>
+                            <label><input type="radio" name="q1" value="b"> Use a password manager</label>
+                            <label><input type="radio" name="q1" value="c"> Reuse one strong password</label>
+                        </div>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-card-header">
+                            <div class="quiz-number">2</div>
+                            <p>What indicates a phishing email?</p>
+                        </div>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q2" value="a"> Personalized greeting</label>
+                            <label><input type="radio" name="q2" value="b"> Email from your domain</label>
+                            <label><input type="radio" name="q2" value="c"> Urgent action with odd link</label>
+                        </div>
+                    </div>
+                    <div class="quiz-card">
+                        <div class="quiz-card-header">
+                            <div class="quiz-number">3</div>
+                            <p>On public Wi‑Fi you should:</p>
+                        </div>
+                        <div class="quiz-options">
+                            <label><input type="radio" name="q3" value="a"> Avoid sensitive logins or use a VPN</label>
+                            <label><input type="radio" name="q3" value="b"> Disable HTTPS</label>
+                            <label><input type="radio" name="q3" value="c"> Share the hotspot</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="quiz-actions">
+                    <button class="btn" id="quiz-submit">Check Answers</button>
+                    <p id="quiz-result" style="font-weight: 600; margin: 0;"></p>
+                </div>
+            </div>
+
+            <div class="certificate">
+                <div>
+                    <h3>Certificate of Completion</h3>
+                    <p id="certificate-msg">Complete all modules and pass the quiz to unlock the certificate.</p>
+                    <label for="cert-name" style="font-weight:600;">Your name</label>
+                    <input id="cert-name" type="text" placeholder="Enter your name" style="display:block;margin-top:.4rem;padding:.5rem .7rem;border:1px solid #e5e7eb;border-radius:6px;width:260px;">
+                </div>
+                <div>
+                    <button id="certificate-btn" class="btn" disabled>Download Certificate</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer (matching index) -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content text-center">
+                <h3>CyberSafe</h3>
+                <p>Empowering you with knowledge to stay safe online.</p>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="ai detector.html">AI Tools</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <p>&copy; 2025 CyberSafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Cyber Crime Detector - CyberSafe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-secondary: #10b981;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+            --color-ai: #8b5cf6;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: #f9fafb;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        /* Header */
+        #header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-dark);
+        }
+        .logo span { color: var(--color-primary); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a {
+            color: var(--color-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--color-primary); }
+
+        /* Hero Section */
+        .ai-hero {
+            background: linear-gradient(135deg, var(--color-light) 0%, #e0e7ff 100%);
+            padding: 10rem 0 5rem 0;
+            margin-top: 70px;
+        }
+
+        /* AI Agent Section */
+        .ai-container {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .ai-sidebar {
+            flex: 1;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            height: fit-content;
+        }
+
+        .ai-main {
+            flex: 2;
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .scan-option {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scan-option:hover {
+            background: var(--color-light);
+        }
+
+        .scan-option.active {
+            background: var(--color-light);
+            border-left: 4px solid var(--color-primary);
+        }
+
+        .scan-icon {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            color: var(--color-primary);
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: var(--color-light);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            max-width: 80%;
+        }
+
+        .ai-message {
+            background: var(--color-primary);
+            color: white;
+            margin-right: auto;
+        }
+
+        .user-message {
+            background: var(--color-secondary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .input-group button {
+            padding: 12px 20px;
+        }
+
+        .threat-indicator {
+            height: 8px;
+            background: #e5e7eb;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .threat-level {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .risk-low { background: var(--color-secondary); width: 20%; }
+        .risk-medium { background: var(--color-warning); width: 50%; }
+        .risk-high { background: var(--color-danger); width: 90%; }
+
+        .risk-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .detection-result {
+            background: var(--color-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--color-ai);
+            margin-bottom: 1rem;
+        }
+
+        /* Footer */
+        #footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 0;
+            margin-top: 5rem;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .footer-links li { margin: 0 1rem; }
+        .footer-links a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .ai-container {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav id="navbar">
+                <a href="index.html" class="logo">Cyber<span>Safe</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="signup page.html" class="btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="ai-hero">
+        <div class="container">
+            <div class="text-center">
+                <h1>AI Cyber Crime Detection Agent</h1>
+                <p>Our advanced AI system helps detect and prevent cyber crimes in real-time</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Agent Section -->
+    <section class="section-padding">
+        <div class="container">
+            <h2 class="text-center">Interactive Threat Detection</h2>
+            <p class="text-center">Describe a suspicious activity, email, or message, and our AI will analyze it for potential cyber threats</p>
+            
+            <div class="ai-container">
+                <div class="ai-sidebar">
+                    <h3>Scan Options</h3>
+                    <div class="scan-option active">
+                        <div class="scan-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Analysis</h4>
+                            <p>Check suspicious emails</p>
+                        </div>
+                    </div>
+                    
+                    <div class="scan-option">
+                        <div class="scan-icon">
+                            <i class="fas fa-link"></i>
+                        </div>
+                        <div>
+                            <h4>URL Scanner</h4>
+                            <p>Verify website safety</p>
+                        </div>
+                    </div>
+                    
+                    <div class="scan-option">
+                        <div class="scan-icon">
+                            <i class="fas fa-comment"></i>
+                        </div>
+                        <div>
+                            <h4>Message Check</h4>
+                            <p>Analyze text messages</p>
+                        </div>
+                    </div>
+                    
+                    <div class="scan-option">
+                        <div class="scan-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h4>System Scan</h4>
+                            <p>Check device security</p>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin-top: 2rem;">Threat Level</h3>
+                    <div class="risk-label">
+                        <span>Low</span>
+                        <span>High</span>
+                    </div>
+                    <div class="threat-indicator">
+                        <div class="threat-level risk-low" id="threatLevel"></div>
+                    </div>
+                    
+                    <div class="detection-result">
+                        <h4>Detection Results</h4>
+                        <div class="result-item">
+                            <span>Phishing Attempt</span>
+                            <span id="phishingScore">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Malware Risk</span>
+                            <span id="malwareScore">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Social Engineering</span>
+                            <span id="socialScore">0%</span>
+                        </div>
+                        <div class="result-item">
+                            <span>Financial Fraud</span>
+                            <span id="fraudScore">0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="ai-main">
+                    <div class="chat-container" id="chatContainer">
+                        <div class="message ai-message">
+                            Hello! I'm your AI cyber security assistant. Paste any suspicious text message, email, social media post, or online communication you've received, and I'll analyze it for potential threats.
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <textarea id="userInput" placeholder="Paste the suspicious text message, email, or communication here..." rows="4" style="width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; resize: vertical; font-family: inherit;"></textarea>
+                        <button class="btn" onclick="analyzeInputLocal()">Analyze Message</button>
+                    </div>
+                    
+                    <div id="analysisResult" style="margin-top: 1.5rem;"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section-padding" style="background-color: var(--color-light);">
+        <div class="container">
+            <h2 class="text-center">How Our AI Detection Works</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Machine Learning</h3>
+                    <p>Our AI uses advanced machine learning algorithms trained on millions of cyber threat examples to identify patterns and anomalies.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <h3>Threat Intelligence</h3>
+                    <p>Real-time access to global threat databases ensures our AI recognizes the latest attack methods and malicious indicators.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Behavioral Analysis</h3>
+                    <p>The AI examines not just content but behavior patterns to identify sophisticated social engineering attempts.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content text-center">
+                <h3>CyberSafe</h3>
+                <p>Empowering you with knowledge to stay safe online.</p>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <p>&copy; 2025 CyberSafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+<script src="config.js"></script>
+<script src="main.js"></script>
+</body>
+</html>

@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberSafe - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-secondary: #10b981;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+            --color-ai: #8b5cf6;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: #f9fafb;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        /* Header */
+        #header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-dark);
+        }
+        .logo span { color: var(--color-primary); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a {
+            color: var(--color-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--color-primary); }
+
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, var(--color-light) 0%, #e0e7ff 100%);
+            padding: 10rem 0 5rem 0;
+            margin-top: 70px;
+        }
+
+        /* Features Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Threats Preview Section */
+        #threats-preview {
+            background-color: var(--color-light);
+        }
+
+        .threats-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .threat-item {
+            background: white;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .threat-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            background-color: var(--color-light);
+        }
+
+        .threat-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .threat-answer.active {
+            max-height: 300px;
+            padding: 1.5rem;
+        }
+
+        .threats-cta {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        /* Footer */
+        #footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .footer-links li { margin: 0 1rem; }
+        .footer-links a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container">
+            <nav id="navbar">
+                <a href="index.html" class="logo">Cyber<span>Safe</span></a>
+                <ul class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#threats-preview">Learn</a></li>
+                    <li><a href="training.html">Training</a></li>
+                    <li><a href="ai detector.html" class="ai-link">AI Detector</a></li>
+                    <li><a href="signup page.html" class="btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="text-center">Stay Secure in the Digital Age</h1>
+                <p class="text-center">Your first step towards understanding cyber threats and protecting yourself online. Knowledge is your best firewall.</p>
+                <div class="text-center" style="margin-top: 2rem;">
+                    <a href="#threats-preview" class="btn">Learn About Threats</a>
+                    <a href="ai detector.html" class="btn" style="background: var(--color-ai); margin-left: 1rem;">Try AI Detector</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section-padding">
+        <div class="container text-center">
+            <h2 class="section-title">Why Cyber Security Matters</h2>
+            <p>Every day, individuals and businesses fall victim to cybercrime, resulting in financial loss, stolen identities, and compromised privacy. The first line of defense is <strong>awareness</strong>.</p>
+            <p>CyberSafe is designed to demystify cybersecurity, providing you with clear, actionable information to help you navigate the web safely and confidently.</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">How CyberSafe Helps You</h2>
+            <h3 class="section-title">About</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h3>📚 Educational Resources</h3>
+                    <p>Access easy-to-understand guides and articles on the latest cyber threats and best practices, written in plain language.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔍 Interactive Tools</h3>
+                    <p>Test your knowledge with our phishing quiz and use our checklist to audit your online security habits.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>⚠️ Threat Alerts</h3>
+                    <p>Stay informed about recent scams and security vulnerabilities that could affect you.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🔐 Strong Passwords</h3>
+                    <p>Learn how to create and manage strong passphrases, use password managers, and avoid reuse across accounts.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🧯 Incident Response</h3>
+                    <p>Step-by-step guidance on what to do if you get phished, lose a device, or suspect a breach.</p>
+                </div>
+                <div class="feature-card">
+                    <h3>🛡️ Two-Factor Auth</h3>
+                    <p>Practical walkthroughs to enable 2FA on popular services and choose between SMS, authenticator apps, and security keys.</p>
+                </div>
+            </div>
+
+            <h3 class="section-title" style="margin-top: 2rem;">Features</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Threat Education</h3>
+                    <p>Learn about various cyber threats and how to protect yourself from them with our comprehensive guides.</p>
+                    <a href="#threats-preview" class="btn" style="margin-top: 1rem;">Explore Threats</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>AI Detection</h3>
+                    <p>Our advanced AI system helps detect and prevent cyber crimes by analyzing suspicious content in real-time.</p>
+                    <a href="ai detector.html" class="btn" style="margin-top: 1rem;">Try AI Tool</a>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3>Security Training</h3>
+                    <p>Interactive courses and simulations to educate users about online threats and security best practices.</p>
+                    <a href="training.html" class="btn" style="margin-top: 1rem;">Start Learning</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Threats Preview Section -->
+    <section id="threats-preview" class="section-padding">
+        <div class="container">
+            <h2 class="section-title text-center">Common Cyber Threats</h2>
+            <p class="text-center">Learn about the most prevalent cyber threats and how to protect yourself</p>
+            
+            <div class="threats-container">
+                <div class="threat-item">
+                    <div class="threat-question">
+                        What is Phishing? <span>+</span>
+                    </div>
+                    <div class="threat-answer">
+                        <p>Phishing is a scam where attackers impersonate legitimate organizations (like your bank or email provider) via email, text, or phone calls to trick you into revealing sensitive information like passwords and credit card numbers. <strong>Tip:</strong> Never click on suspicious links and always check the sender's email address.</p>
+                    </div>
+                </div>
+                
+                <div class="threat-item">
+                    <div class="threat-question">
+                        What is Malware? <span>+</span>
+                    </div>
+                    <div class="threat-answer">
+                        <p>Malware (Malicious Software) is software designed to harm or gain unauthorized access to a computer system. This includes viruses, ransomware, and spyware. It often spreads through malicious downloads or email attachments. <strong>Tip:</strong> Use a reputable antivirus and avoid downloading software from untrusted sources.</p>
+                    </div>
+                </div>
+                
+                <div class="threat-item">
+                    <div class="threat-question">
+                        How can I create a strong password? <span>+</span>
+                    </div>
+                    <div class="threat-answer">
+                        <p>Use a long passphrase (a sequence of random words) instead of a single complex word. For example, <code>Blue-Coffee-Mug-Bounces-22!</code> is much stronger than <code>P@ssw0rd</code>. Enable Two-Factor Authentication (2FA) wherever possible for an extra layer of security.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="threats-cta">
+                <p>Want to learn about more cyber threats?</p>
+                <a href="threats.html" class="btn" style="margin-top: 1rem;">Explore All Threats</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content text-center">
+                <h3>CyberSafe</h3>
+                <p>Empowering you with knowledge to stay safe online.</p>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="ai detector.html">AI Tools</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact:6366911167</a></li>
+                </ul>
+                <p>&copy; 2025 CyberSafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+</body>
+</html>
