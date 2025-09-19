@@ -1,0 +1,668 @@
+<!-- Renamed from 'cyber threats.html' -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Threats - CyberSafe</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        :root {
+            --color-primary: #2563eb;
+            --color-primary-dark: #1d4ed8;
+            --color-secondary: #10b981;
+            --color-dark: #1f2937;
+            --color-light: #f3f4f6;
+            --color-danger: #ef4444;
+            --color-warning: #f59e0b;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: #fff;
+        }
+
+        h1, h2, h3, h4 {
+            margin-bottom: 1rem;
+            line-height: 1.2;
+            font-weight: 700;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--color-primary);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--color-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background: var(--color-primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        /* Header */
+        #header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        #navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--color-dark);
+        }
+        .logo span { color: var(--color-primary); }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li { margin-left: 2rem; }
+        .nav-links a {
+            color: var(--color-dark);
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--color-primary); }
+
+        /* Hero Section */
+        .threats-hero {
+            background: linear-gradient(135deg, var(--color-light) 0%, #e0e7ff 100%);
+            padding: 10rem 0 5rem 0;
+            margin-top: 70px;
+        }
+
+        /* Threat Categories */
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+
+        .category-tab {
+            padding: 12px 24px;
+            background: white;
+            border: 2px solid var(--color-light);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .category-tab.active {
+            background: var(--color-primary);
+            color: white;
+            border-color: var(--color-primary);
+        }
+
+        .category-tab:hover:not(.active) {
+            border-color: var(--color-primary);
+        }
+
+        /* Threat Grid */
+        .threats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .threat-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+
+        .threat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .threat-icon {
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .threat-info {
+            padding: 1.5rem;
+        }
+
+        .threat-type {
+            display: inline-block;
+            padding: 4px 12px;
+            background: var(--color-light);
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .threat-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: #6b7280;
+        }
+
+        /* Threat Detail Modal */
+        .threat-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 10px;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .prevention-list {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .prevention-list li {
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        #footer {
+            background: var(--color-dark);
+            color: white;
+            padding: 3rem 0;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .footer-links {
+            display: flex;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+        .footer-links li { margin: 0 1rem; }
+        .footer-links a {
+            color: #ddd;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover { color: white; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .threats-hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .category-tabs {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .threats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <nav id="navbar">
+                <a href="index.html" class="logo">Cyber<span>Safe</span></a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="login.html" class="btn">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="threats-hero">
+        <div class="container">
+            <div class="text-center">
+                <h1>Cyber Crime Threats</h1>
+                <p>Learn about various cyber threats and how to protect yourself from them</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Threat Categories -->
+    <section class="section-padding">
+        <div class="container">
+            <div class="category-tabs">
+                <div class="category-tab active" data-category="all">All Threats</div>
+                <div class="category-tab" data-category="social">Social Engineering</div>
+                <div class="category-tab" data-category="malware">Malware</div>
+                <div class="category-tab" data-category="financial">Financial Crimes</div>
+                <div class="category-tab" data-category="data">Data Breaches</div>
+            </div>
+            
+            <div class="threats-grid">
+                <!-- Phishing -->
+                <div class="threat-card" data-category="social">
+                    <div class="threat-icon" style="background-color: #3B82F6;">
+                        <i class="fas fa-fish"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Social Engineering</span>
+                        <h3>Phishing Attacks</h3>
+                        <p>Fraudulent attempts to obtain sensitive information by disguising as a trustworthy entity.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">80%</div>
+                                <div class="stat-label">Of attacks</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">$4.65M</div>
+                                <div class="stat-label">Avg. cost</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">↑ 65%</div>
+                                <div class="stat-label">Increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('phishing')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- Ransomware -->
+                <div class="threat-card" data-category="malware">
+                    <div class="threat-icon" style="background-color: #EF4444;">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Malware</span>
+                        <h3>Ransomware</h3>
+                        <p>Malicious software that blocks access to a computer system until a ransom is paid.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">$1.85M</div>
+                                <div class="stat-label">Avg. ransom</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">11 days</div>
+                                <div class="stat-label">Downtime</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">↑ 100%</div>
+                                <div class="stat-label">Increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('ransomware')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- Identity Theft -->
+                <div class="threat-card" data-category="financial">
+                    <div class="threat-icon" style="background-color: #8B5CF6;">
+                        <i class="fas fa-id-card"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Financial Crime</span>
+                        <h3>Identity Theft</h3>
+                        <p>Fraudulent acquisition and use of a person's private identifying information.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">33%</div>
+                                <div class="stat-label">Of Americans</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">$15B</div>
+                                <div class="stat-label">Annual loss</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">42%</div>
+                                <div class="stat-label">Online increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('identitytheft')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- Business Email Compromise -->
+                <div class="threat-card" data-category="financial">
+                    <div class="threat-icon" style="background-color: #10B981;">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Financial Crime</span>
+                        <h3>Business Email Compromise</h3>
+                        <p>Sophisticated scam targeting businesses working with foreign suppliers.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">$1.8B</div>
+                                <div class="stat-label">Losses in 2021</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">65%</div>
+                                <div class="stat-label">Target businesses</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">↑ 45%</div>
+                                <div class="stat-label">Increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('bec')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- Data Breach -->
+                <div class="threat-card" data-category="data">
+                    <div class="threat-icon" style="background-color: #F59E0B;">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Data Breach</span>
+                        <h3>Data Breaches</h3>
+                        <p>Security incidents where sensitive, protected or confidential data is copied, transmitted, viewed, stolen or used.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">4.24M</div>
+                                <div class="stat-label">Avg. cost</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">287 days</div>
+                                <div class="stat-label">To identify</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">↑ 10%</div>
+                                <div class="stat-label">Increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('databreach')">Learn More</button>
+                    </div>
+                </div>
+                
+                <!-- IoT Attacks -->
+                <div class="threat-card" data-category="malware">
+                    <div class="threat-icon" style="background-color: #6366F1;">
+                        <i class="fas fa-wifi"></i>
+                    </div>
+                    <div class="threat-info">
+                        <span class="threat-type">Malware</span>
+                        <h3>IoT Attacks</h3>
+                        <p>Cyber attacks targeting Internet of Things devices like smart home systems and medical devices.</p>
+                        <div class="threat-stats">
+                            <div class="stat">
+                                <div class="stat-number">25B</div>
+                                <div class="stat-label">IoT devices</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">98%</div>
+                                <div class="stat-label">Unencrypted</div>
+                            </div>
+                            <div class="stat">
+                                <div class="stat-number">↑ 100%</div>
+                                <div class="stat-label">Increase</div>
+                            </div>
+                        </div>
+                        <button class="btn" style="margin-top: 1rem; width: 100%;" onclick="openThreatModal('iot')">Learn More</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Threat Modals -->
+    <div id="phishing-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('phishing-modal')">&times;</span>
+            <h2>Phishing Attacks</h2>
+            <p>Phishing is a cybercrime in which targets are contacted by email, telephone, or text message by someone posing as a legitimate institution to lure individuals into providing sensitive data such as personally identifiable information, banking and credit card details, and passwords.</p>
+            
+            <h3>How It Works</h3>
+            <p>Attackers create fake emails or websites that mimic legitimate organizations. These often create a sense of urgency, prompting victims to act quickly without verifying the authenticity of the request.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Verify the sender's email address carefully</li>
+                <li>Never click on suspicious links in emails</li>
+                <li>Look for spelling and grammar mistakes</li>
+                <li>Use multi-factor authentication</li>
+                <li>Keep your software and antivirus updated</li>
+                <li>Be cautious of urgent requests for personal information</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>In 2020, Twitter experienced a major phishing attack where employees were tricked into providing credentials that led to the compromise of high-profile accounts like Barack Obama, Elon Musk, and Bill Gates.</p>
+        </div>
+    </div>
+
+    <div id="ransomware-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('ransomware-modal')">&times;</span>
+            <h2>Ransomware</h2>
+            <p>Ransomware is a type of malicious software designed to block access to a computer system until a sum of money is paid. It often encrypts the victim's files, making them inaccessible, and demands a ransom payment to restore access.</p>
+            
+            <h3>How It Works</h3>
+            <p>Ransomware typically spreads through phishing emails or by unknowingly visiting an infected website. It can also propagate through network vulnerabilities. Once executed, it encrypts files and displays a ransom note with payment instructions.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Regularly back up your data using the 3-2-1 rule (3 copies, 2 media types, 1 offsite)</li>
+                <li>Keep all systems and software updated with security patches</li>
+                <li>Use reputable security software with ransomware protection</li>
+                <li>Be extremely cautious with email attachments and links</li>
+                <li>Implement network segmentation to limit spread</li>
+                <li>Educate employees about cybersecurity risks</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>The WannaCry ransomware attack in 2017 affected over 200,000 computers across 150 countries, targeting hospitals, businesses, and government agencies, causing billions of dollars in damages.</p>
+        </div>
+    </div>
+
+    <div id="identitytheft-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('identitytheft-modal')">&times;</span>
+            <h2>Identity Theft</h2>
+            <p>Identity theft occurs when someone uses your personal information, such as your name, Social Security number, or credit card number, without your permission to commit fraud or other crimes.</p>
+            
+            <h3>How It Works</h3>
+            <p>Criminals obtain personal information through data breaches, phishing, social engineering, or physical theft. They then use this information to open accounts, make purchases, or commit other fraudulent activities in your name.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Monitor your credit reports regularly</li>
+                <li>Use strong, unique passwords for all accounts</li>
+                <li>Enable two-factor authentication where available</li>
+                <li>Be cautious about sharing personal information online</li>
+                <li>Shred documents containing sensitive information</li>
+                <li>Use secure networks when accessing financial accounts</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>The Equifax data breach in 2017 exposed the personal information of 147 million Americans, including Social Security numbers, birth dates, and addresses, making it one of the largest identity theft risks in history.</p>
+        </div>
+    </div>
+
+    <div id="bec-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('bec-modal')">&times;</span>
+            <h2>Business Email Compromise (BEC)</h2>
+            <p>BEC is a sophisticated scam targeting businesses that work with foreign suppliers or regularly perform wire transfer payments. Attackers compromise legitimate business email accounts to conduct unauthorized transfers of funds.</p>
+            
+            <h3>How It Works</h3>
+            <p>Criminals research their targets and use social engineering to gain access to business email accounts. They then send fraudulent emails requesting wire transfers, often impersonating executives or trusted business partners.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Verify all wire transfer requests through a secondary channel</li>
+                <li>Implement email authentication protocols (SPF, DKIM, DMARC)</li>
+                <li>Train employees to recognize BEC red flags</li>
+                <li>Use multi-factor authentication for email accounts</li>
+                <li>Establish clear procedures for financial transactions</li>
+                <li>Regularly audit financial processes and access controls</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>In 2019, a Lithuanian man was sentenced to 5 years in prison for orchestrating a BEC scheme that defrauded two U.S. companies of over $100 million by impersonating their business partners.</p>
+        </div>
+    </div>
+
+    <div id="databreach-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('databreach-modal')">&times;</span>
+            <h2>Data Breaches</h2>
+            <p>A data breach is a security incident in which sensitive, protected, or confidential data is accessed, disclosed, or stolen by an unauthorized individual. This can include personal information, financial data, or intellectual property.</p>
+            
+            <h3>How It Works</h3>
+            <p>Data breaches can occur through various methods including hacking, insider threats, physical theft, or accidental exposure. Attackers exploit vulnerabilities in systems, networks, or human behavior to gain unauthorized access to sensitive data.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Implement strong access controls and authentication</li>
+                <li>Encrypt sensitive data both in transit and at rest</li>
+                <li>Regularly update and patch all systems</li>
+                <li>Conduct regular security assessments and audits</li>
+                <li>Train employees on data protection best practices</li>
+                <li>Implement data loss prevention (DLP) solutions</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>The Yahoo data breach disclosed in 2016 affected all 3 billion user accounts, making it the largest data breach in history at the time, with stolen information including names, email addresses, phone numbers, and encrypted passwords.</p>
+        </div>
+    </div>
+
+    <div id="iot-modal" class="threat-modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal('iot-modal')">&times;</span>
+            <h2>IoT Security Threats</h2>
+            <p>Internet of Things (IoT) security threats refer to vulnerabilities in connected devices like smart home appliances, wearables, and industrial sensors that can be exploited by cybercriminals to gain unauthorized access or launch attacks.</p>
+            
+            <h3>How It Works</h3>
+            <p>Many IoT devices have weak security measures, default passwords, and unencrypted communications. Attackers can exploit these vulnerabilities to gain control of devices, steal data, or use them as entry points into larger networks.</p>
+            
+            <h3>Prevention Tips</h3>
+            <ul class="prevention-list">
+                <li>Change default passwords on all IoT devices</li>
+                <li>Keep IoT devices updated with latest firmware</li>
+                <li>Use a separate network for IoT devices</li>
+                <li>Disable unnecessary features and services</li>
+                <li>Research device security before purchasing</li>
+                <li>Monitor network traffic for unusual activity</li>
+            </ul>
+            
+            <h3>Real-World Example</h3>
+            <p>The Mirai botnet in 2016 infected hundreds of thousands of IoT devices with weak security, using them to launch massive DDoS attacks that disrupted major websites including Twitter, Netflix, and Reddit.</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-content text-center">
+                <h3>CyberSafe</h3>
+                <p>Empowering you with knowledge to stay safe online.</p>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="threats.html">Learn</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+                <p>&copy; 2025 CyberSafe. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+<script src="config.js"></script>
+<script src="main.js"></script>
+
+</body>
+</html>
